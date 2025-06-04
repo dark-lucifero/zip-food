@@ -19,42 +19,22 @@ export const restaurantTable = pgTable("restaurants", {
   address: text("address").notNull(),
 });
 
-// Menu Item Table
-export const itemTable = pgTable("items", {
+// FOOD Item Table
+export const FoodTable = pgTable("food", {
   id: serial("id").primaryKey(),
   restaurantId: integer("restaurant_id").notNull().references(() => restaurantTable.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   description: text("description"),
   price: numeric("price", { precision: 10, scale: 2 }).notNull(),
   available: boolean("available").default(true),
+  imageUrl: text("imageUrl").notNull(),
 });
 
 // Order Table
 export const orderTable = pgTable("orders", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull().references(() => userTable.id, { onDelete: "cascade" }),
-  restaurantId: integer("restaurant_id").notNull().references(() => restaurantTable.id, { onDelete: "cascade" }),
-  totalAmount: numeric("total_amount", { precision: 10, scale: 2 }).notNull(),
+  foodId: integer("restaurant_id").notNull().references(() => restaurantTable.id, { onDelete: "cascade" }),
   status: text("status").notNull().default("pending"), // "pending", "confirmed", "preparing", "out_for_delivery", "delivered", "cancelled"
-  createdAt: timestamp({withTimezone: true, mode: "string"}).defaultNow(),
-});
-
-// OrderItem Table (Many-to-Many relationship between Orders and Items)
-export const orderItemTable = pgTable("order_items", {
-  orderId: integer("order_id").notNull().references(() => orderTable.id, { onDelete: "cascade" }),
-  itemId: integer("item_id").notNull().references(() => itemTable.id, { onDelete: "cascade" }),
-  quantity: integer("quantity").notNull(),
-  price: numeric("price", { precision: 10, scale: 2 }).notNull(),
-}, (table) => ({
-  pk: primaryKey({ columns: [table.orderId, table.itemId] }), // Composite Primary Key
-}));
-
-// Delivery Table
-export const deliveryTable = pgTable("deliveries", {
-  id: serial("id").primaryKey(),
-  orderId: integer("order_id").notNull().references(() => orderTable.id, { onDelete: "cascade" }),
-  deliveryAgentId: integer("delivery_agent_id").notNull().references(() => userTable.id, { onDelete: "cascade" }),
-  status: text("status").notNull().default("pending"), // "pending", "assigned", "out_for_delivery", "delivered"
-  deliveredAt: timestamp("delivered_at"),
   createdAt: timestamp({withTimezone: true, mode: "string"}).defaultNow(),
 });

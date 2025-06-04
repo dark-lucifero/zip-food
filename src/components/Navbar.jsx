@@ -49,7 +49,7 @@ const Navbar1 = ({
           title: "restaurant",
           description: "I am a restaurant owner",
           icon: <Apple className="size-5 shrink-0" />,
-          url: "/createRestaurant",
+          url: "/restaurant",
         },
         {
           title: "Careers",
@@ -67,8 +67,8 @@ const Navbar1 = ({
       ],
     },
     {
-      title: "Pricing",
-      url: "#",
+      title: "restaurant",
+      url: "restaurant",
     },
     {
       title: "Blog",
@@ -118,13 +118,13 @@ const Navbar1 = ({
             <a href={logo.url} className="flex items-center gap-2">
               <img src={logo.src} className="max-h-8" alt={logo.alt} />
             </a>
-            <Sheet>
+            <Sheet >
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon">
                   <Menu className="size-4" />
                 </Button>
               </SheetTrigger>
-              <SheetContent className="overflow-y-auto">
+              <SheetContent className="overflow-y-auto ">
                 <SheetHeader>
                   <SheetTitle>
                     <a href={logo.url} className="flex items-center gap-2">

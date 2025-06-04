@@ -9,6 +9,8 @@ import L from 'leaflet';
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
+import { createUser } from "@/lib/actions"
+
 // Fix for Leaflet marker icon issue (Webpack)
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -53,14 +55,15 @@ function LocationPicker({ user }) {
             role: "customer"
         }
         
+        const formData = new FormData();
+        for (const key in userObj) {
+            formData.append(key, userObj[key]);
+        }
+        
+        
+        
         try {
-            const res = fetch("http://localhost:3000/api/createUser", {
-                method: "POST",
-                body: JSON.stringify(userObj),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                }
-            });
+            await createUser(formData)
         } catch (e) {
             console.log(e)
         }
@@ -79,7 +82,7 @@ function LocationPicker({ user }) {
                 <Button onClick={handleCreateUser} >create</Button>
             </div>
             
-            <MapContainer center={mapCenter} zoom={13} style={{ height: '400px', width: '100%' }}>
+            <MapContainer center={mapCenter} zoom={13} style={{ height: '400px', width: '100%',  }}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -88,7 +91,7 @@ function LocationPicker({ user }) {
                 <LocationMarker />
           
                 {location && (
-                    <div style={{ position: 'absolute', top: '10px', right: '10px', background: 'white', padding: '10px', borderRadius: '5px', zIndex: 400 }}>
+                    <div style={{ position: 'absolute', top: '10px', right: '10px', background: 'white', padding: '10px', borderRadius: '5px',}}>
                         <p>Latitude: {location.lat.toFixed(6)}</p>
                         <p>Longitude: {location.lng.toFixed(6)}</p>
                     </div>

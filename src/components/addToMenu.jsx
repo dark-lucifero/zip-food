@@ -1,3 +1,5 @@
+
+
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -14,7 +16,7 @@ import { Label } from "@/components/ui/label"
 
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { eq } from 'drizzle-orm';
-import { restaurantTable, itemTable } from '@/lib/schema';
+import { restaurantTable, FoodTable } from '@/lib/schema';
 
 const db = drizzle(process.env.DATABASE_URL);
 
@@ -27,16 +29,18 @@ export function AddToMenu({ restData }) {
             data[key] = value;
         }
         
+        console.log(data)
         
-        await db.insert(itemTable).values({
+        await db.insert(FoodTable).values({
             restaurantId: restData.id,
             name: data.name,
             description: data.description,
             price: data.price,
-            available: true
+            available: true,
+            imageUrl: "https://google-image/1"
         });
         
-        console.log('New item created!')
+        console.log('New item created!');
     }
     
     

@@ -10,18 +10,3 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 });
 
-
-async function signInCallback(user) {
-    try {
-        const res = fetch("http://localhost:3000/api/createUser", {
-            method: "POST",
-            body: JSON.stringify(user),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8",
-                "x-api-key": process.env.AUTH_SECRET
-            }
-        });
-    } catch (e) {
-        console.log(e)
-    }
-}

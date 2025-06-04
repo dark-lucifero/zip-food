@@ -1,4 +1,16 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
 
-export default nextConfig;
+const config = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'google-image',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
+    ],
+  },
+}
+ 
+export default config
