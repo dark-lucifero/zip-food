@@ -2,25 +2,30 @@
 
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+
 import { deleteFoodById } from "@/lib/actions"
 import { useRef } from "react"
-
+import { useRouter } from 'next/navigation'
 
 export default function FoodCard({ index, food, deleteBtn }) {
     
     const ref = useRef(null)
+    const router = useRouter();
     
     async function handleDelete(foodId) {
         const formData = new FormData();
         formData.append("foodId", foodId)
         
-        
         await deleteFoodById(formData)
         ref.current.remove();
     }
     
+    async function handleOpenCard() {
+        router.push(`/food/${food.id}`)
+    }
+    
     return (
-        <div key={index} ref={ref} className="bg-stone-100 aspect-[4/4.8] rounded-xl relative rounded-2xl">
+        <div key={index} ref={ref} role="button" onClick={handleOpenCard} className="bg-stone-100 aspect-[4/4.8] rounded-xl relative rounded-2xl">
             <Image
                 src={food.imageUrl}
                 width={40} height={50}

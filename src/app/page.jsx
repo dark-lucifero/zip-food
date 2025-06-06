@@ -50,7 +50,7 @@ export default function Home() {
             <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 py-6 gap-2" >
             {
                 foods.map((food, index) => (
-                    <FoodCard index={index} food={food} deleteBtn={false}/>
+                    <FoodCard key={index} index={index} food={food} deleteBtn={false}/>
                 ))
                 
             }

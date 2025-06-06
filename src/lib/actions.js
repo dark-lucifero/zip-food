@@ -108,3 +108,27 @@ export async function getFilteredFood(formData) {
     
     return foods
 }
+
+export async function getFoodById(formData) {
+    const session = await auth();
+    if(!session) return "not authorized";
+    
+    const foodId = await formData.get("foodId")
+    
+    const food = await db
+    .select({
+        id: FoodTable.id,
+        name: FoodTable.name,
+        description: FoodTable.description,
+        price: FoodTable.price,
+        available: FoodTable.available,
+        imageUrl: FoodTable.imageUrl,
+        restaurantNane: restaurantTable.name,
+        restaurantAddress: restaurantTable.address
+    })
+    .from(FoodTable)
+    .innerJoin(restaurantTable, eq(FoodTable.restaurantId, restaurantTable.id))
+    .where(eq(FoodTable.id, foodId));
+    
+    return food[0];
+}

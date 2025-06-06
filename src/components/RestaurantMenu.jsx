@@ -23,7 +23,7 @@ export default async function RestaurantMenu({ restData }) {
             <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 gap-2" >
             {
                 foods.map((food, index) => (
-                    <FoodCard index={index} food={food} deleteBtn={true}/>
+                    <FoodCard key={index} index={index} food={food} deleteBtn={true}/>
                 ))
                 
             }
