@@ -25,12 +25,13 @@ export default function FoodCard({ index, food, deleteBtn }) {
     }
     
     return (
-        <div key={index} ref={ref} role="button" onClick={handleOpenCard} className="bg-stone-100 aspect-[4/4.8] rounded-xl relative rounded-2xl">
+        <div key={index} ref={ref} className="bg-stone-100 aspect-[4/4.8] rounded-xl relative rounded-2xl">
             <Image
                 src={food.imageUrl}
                 width={40} height={50}
                 alt="food image"
-                className="bg-amber-500 w-[100%] h-[100%] absolute rounded-2xl"
+                className="bg-amber-500 w-[100%] h-[100%] absolute rounded-2xl object-cover"
+                role="button" onClick={handleOpenCard}
             />
             
             <div className="absolute bottom-0 left-0 right-0 bg-amber-100 rounded-b-2xl h-20 pb-2 flex items-center" >

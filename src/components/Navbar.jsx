@@ -6,7 +6,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
 import { Button } from "@/components/ui/button";
+
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -22,6 +24,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+
+import CartDialog from "@/components/Cart"
 
 import { signIn } from "@/lib/auth"
 
@@ -68,7 +72,7 @@ const Navbar1 = ({
     },
     {
       title: "restaurant",
-      url: "restaurant",
+      url: "/restaurant",
     },
     {
       title: "Blog",
@@ -108,6 +112,7 @@ const Navbar1 = ({
                     Login
                 </Button>
             </form>
+            <CartDialog key={1} />
           </div>
         </nav>
 
@@ -153,6 +158,7 @@ const Navbar1 = ({
                         </Button>
                         
                     </form>
+                    <CartDialog key={2} />
                     
                   </div>
                 </div>

@@ -34,7 +34,8 @@ export const FoodTable = pgTable("food", {
 export const orderTable = pgTable("orders", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull().references(() => userTable.id, { onDelete: "cascade" }),
-  foodId: integer("restaurant_id").notNull().references(() => restaurantTable.id, { onDelete: "cascade" }),
+  foodId: integer("food_id").notNull().references(() => FoodTable.id, { onDelete: "cascade" }),
+  quantity: numeric("quantity", { precision: 10, scale: 2 }).notNull(),
   status: text("status").notNull().default("pending"), // "pending", "confirmed", "preparing", "out_for_delivery", "delivered", "cancelled"
   createdAt: timestamp({withTimezone: true, mode: "string"}).defaultNow(),
 });

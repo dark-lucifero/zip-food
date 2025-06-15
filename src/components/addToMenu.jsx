@@ -1,5 +1,3 @@
-
-
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -18,11 +16,13 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { eq } from 'drizzle-orm';
 import { restaurantTable, FoodTable } from '@/lib/schema';
 
+import { uploadFile } from "@/lib/actions";
+
 const db = drizzle(process.env.DATABASE_URL);
 
 export function AddToMenu({ restData }) {
     
-    async function handleAddItem(formData ) {
+    async function handleAddItem(formData) {
         "use server"
         const data = {};
         for (const [key, value] of formData.entries()) {
@@ -31,13 +31,19 @@ export function AddToMenu({ restData }) {
         
         console.log(data)
         
+        const newFormData = new FormData();
+        newFormData.append("file", data.file)
+        
+        const fileUrl = await uploadFile(newFormData)
+        
+        
         await db.insert(FoodTable).values({
             restaurantId: restData.id,
             name: data.name,
             description: data.description,
             price: data.price,
             available: true,
-            imageUrl: "https://google-image/1"
+            imageUrl: fileUrl
         });
         
         console.log('New item created!');
@@ -74,6 +80,11 @@ export function AddToMenu({ restData }) {
                    <div className="flex gap-2 flex-col" >
                         <Label htmlFor="price" >Food Price</Label>
                         <Input type="number" placeholder="(e.g) 6.99" id="price" name="price" step="0.01" />
+                    </div>
+                    
+                    <div className="flex gap-2 flex-col" >
+                        <Label htmlFor="image" >Food image</Label>
+                        <Input type="file"  id="file" name="file" />
                     </div>
                     
                     <Button type="submit">Add</Button>

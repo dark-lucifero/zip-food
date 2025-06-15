@@ -4,9 +4,9 @@ const config = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'google-image',
+        hostname: 'qzrvlnynxpzmolshqafi.supabase.co',
         port: '',
-        pathname: '/**',
+        pathname: '/storage/v1/object/public/**',
         search: '',
       },
     ],
@@ -14,3 +14,4 @@ const config = {
 }
  
 export default config
+
